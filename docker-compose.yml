@@ -17,14 +17,12 @@ services:
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8181"
-    env_file:
-      - path: ./configs/private/privateConf.dev.yml
-        required: true
     environment:
       - DB_HOST=db
-      - DB_NAME=devdb
-      - DB_USER=devuser
-      - DB_PASS=changeme
+      - DB_NAME=${POSTGRES_DB}
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASS=${POSTGRES_PASSWORD}
+      - DB_PORT=${POSTGRES_PORT}
     depends_on:
       - db
 
@@ -32,13 +30,10 @@ services:
     image: postgres:16-alpine
     volumes:
       - dev-db-data-ticket:/var/lib/postgresql/data
-    env_file:
-      - path: ./configs/private/privateConf.dev.yml
-        required: true
     environment:
-      - POSTGRES_DB=devdb
-      - POSTGRES_USER=devuser
-      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
 volumes:
   dev-db-data-ticket:
