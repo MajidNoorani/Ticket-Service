@@ -7,6 +7,12 @@ jobs:
   test-lint:
     name: Test and Lint
     runs-on: ubuntu-20.04
+    env: # Define environment variables here
+      POSTGRES_HOST: ${{ vars.POSTGRES_HOST }}
+      POSTGRES_DB: ${{ vars.POSTGRES_DB }}
+      POSTGRES_USER: ${{ vars.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_PORT: ${{ vars.POSTGRES_PORT }}
     steps:
       - name: Loging to Docker Hub
         uses: docker/login-action@v3
